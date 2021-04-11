@@ -1,5 +1,6 @@
 const express = require('express')
 const mysql = require('mysql');
+const { emitKeypressEvents } = require('readline');
 const util = require('util');
 require('dotenv').config();
 
@@ -67,14 +68,29 @@ app.post('/ratings/', async (req, res) => {
 
 app.get('/responses/', async (req, res) => {
   const sqlQuery = `
-    SELECT f.id, fd.feedback, q.question 
+    SELECT f.id, fd.feedback, q.question, f.rating
     FROM feedbacks f 
     JOIN feedback_details fd 
     ON f.id=fd.feedback_id 
     JOIN questions q
-    q ON fd.question_id = q.id;
+    ON fd.question_id = q.id;
     `
-  const result = await db.query(sqlQuery);
+  const queryResult = await db.query(sqlQuery);
+  let result = {}
+  queryResult.map(el => {
+    if (!result[`${el.id}`]) {
+      result[`${el.id}`] = {
+        id: el.id,
+        rating: el.rating,
+        feedback: []
+      }
+    }
+    result[`${el.id}`].feedback.push({
+      question: el.question,
+      feedback: el.feedback
+    })
+  });
+  result = Object.values(result);
   res.send(result);
 })
 
