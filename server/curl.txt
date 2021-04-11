@@ -1,0 +1,7 @@
+## UPDATE FEEDBACK
+curl -X PUT http://localhost:3001/responses/3 -d '{"like_most": "flowers", "like_least":"edit","email":"jn@fm.com"}'  --header 'Content-type:application/json'
+{"message":"Update successfully"}
+
+## POST FEEDBACK
+curl -X POST http://localhost:3001/ratings -d '{"rating": "3"}'  --header 'Content-type:application/json'
+

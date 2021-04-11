@@ -1,0 +1,99 @@
+#app {
+  position: relative;
+  background-color: #2d84f5;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+}
+
+.box {
+  margin: 1em;
+  padding: 0.25em;
+  /* max-width: 2em; */
+  min-width: 2em;
+  height: 2em;
+  border-radius: 2em;
+  background-color: #404040;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 4s;
+}
+
+.box img {
+  height: 100%;
+  transition: all 0.4s;
+}
+
+.box strong {
+  color: white;
+  width: max-content;
+  padding: 0 1em;
+  transform: translateX(-10px);
+}
+
+.box:hover {
+  max-width: max-content;
+}
+
+.box:hover strong {
+  animation: move-right 0.4s ease-in 0.4s forwards;
+}
+
+.box-clicked {
+  padding: 0;
+  align-items: flex-end;
+}
+
+@keyframes move-right {
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.box.box-big {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 1em;
+  border-radius: 0.5em;
+  cursor: default;
+}
+
+
+.face-enter {
+  opacity: 0;
+}
+.face-enter-active {
+  opacity: 1;
+  transition: opacity 400ms;
+}
+.face-exit {
+  opacity: 1;
+}
+.face-exit-active {
+  opacity: 0;
+  transition: opacity 400ms;
+}
+
+.badge-enter {
+  opacity: 0;
+  /* transform: translateX(-1000); */
+}
+.badge-enter-active {
+  opacity: 1;
+  /* transform: translateX(0); */
+  transition: all 400ms 400ms;
+}
+.badge-exit {
+  /* transform: translateX(0); */
+  opacity: 1;
+}
+.badge-exit-active {
+  opacity: 0;
+  /* transform: translateX(-1000); */
+  transition: all 400ms;
+}

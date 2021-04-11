@@ -1,0 +1,59 @@
+#container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f8f8;
+    padding: 1em;
+    border-radius: 0.5em;
+    cursor: default;
+}
+
+#rating-box {
+    display: flex;
+    border-radius: 0.5em;
+    border: 2px solid black;
+    overflow: hidden;
+}
+
+.rating-item {
+    width: 3em;
+    height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 2px solid black;
+    cursor: pointer;
+}
+
+.first {
+    border-left: unset;
+}
+
+.rating-item:hover {
+    background-color: #c7c7c7;
+}
+
+#row {
+    display: flex;
+}
+
+#rowSpace {
+    margin-top: 0.5em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.satisfy {
+    text-transform: uppercase;
+}
+
+#close {
+    color: #b8b8ba;
+    font-size: 1.5em;
+    position: absolute;
+    top: 0.25em;
+    right: 0.25em;
+    cursor: pointer;
+}
