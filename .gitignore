@@ -24,3 +24,7 @@ yarn-error.log*
 
 # environment file
 .env
+.env.*
+
+# react
+client/build
