@@ -72,25 +72,43 @@ const Form = ({ onSubmit, onClose, questions }) => {
             const isEmail = questionType === "email";
             const hasError = responses[id] && !!responses[id].error;
             return (
-              <div key={id}>
+              <div key={id} className="item">
                 <p>
                   {question}
                   {isRequired && <span> *</span>}
                 </p>
-                <textarea
-                  className={hasError ? "text_error" : undefined}
-                  name={id}
-                  placeholder={placeholder + (!isRequired ? " (optional)" : "")}
-                  rows={isEmail ? 1 : 3}
-                  maxLength={255}
-                  onFocus={() => onFocus(id, isEmail)}
-                  onBlur={
-                    isRequired || isEmail
-                      ? () => onBlur(id, isRequired, isEmail)
-                      : undefined
-                  }
-                  {...{ onChange }}
-                />
+                {questionType === "linear_scale" ? (
+                  <div className="row">
+                    {[...Array(6)].map((_, number) => (
+                      <div key={number} className="linear-box">
+                        <input
+                          type="radio"
+                          value={number}
+                          name={id}
+                          {...{ onChange }}
+                        />
+                        <label htmlFor={number}>{number}</label>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <textarea
+                    className={hasError ? "text_error" : undefined}
+                    name={id}
+                    placeholder={
+                      placeholder + (!isRequired ? " (optional)" : "")
+                    }
+                    rows={isEmail ? 1 : 3}
+                    maxLength={255}
+                    onFocus={() => onFocus(id, isEmail)}
+                    onBlur={
+                      isRequired || isEmail
+                        ? () => onBlur(id, isRequired, isEmail)
+                        : undefined
+                    }
+                    {...{ onChange }}
+                  />
+                )}
                 {hasError && <div className="error">{responses[id].error}</div>}
               </div>
             );

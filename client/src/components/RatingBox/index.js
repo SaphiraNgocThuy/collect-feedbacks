@@ -11,7 +11,7 @@ const RatingBox = ({ onRating, onClose, step }) => (
         <div className="bold">Rate your experience</div>
         <div>
           <div id="rating-box">
-            {[...Array(6)].map((item, index) => (
+            {[...Array(6)].map((_, index) => (
               <div
                 className={`rating-item ${index === 0 && "first"}`}
                 key={index}
