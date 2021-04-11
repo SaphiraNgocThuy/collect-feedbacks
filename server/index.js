@@ -1,5 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const util = require('util');
 require('dotenv').config();
@@ -32,6 +31,7 @@ const app = express();
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', '*');
+    res.header('Access-Control-Allow-Methods', 'POST, PUT, GET, OPTIONS')
     req.header('content-type', 'application/json');
 
     if ('OPTIONS' === req.method) {
@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
       next();
     }
 });
-app.use(bodyParser.json());
+app.use(express.json());
 
 const port = process.env.BACKEND_PORT || 3001;
 
