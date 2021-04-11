@@ -1,9 +1,8 @@
 #form-container {
     position: relative;
     background-color: #f8f8f8;
-    border-radius: 0.5em;
-    /* max-width: 20em; */
-    width: 300px;
+    border-radius: 0.25em;
+    width: 18em;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -27,17 +26,17 @@ form {
 
 form p {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 input[type=text],
 textarea {
     width: 100%;
-    font-size: 14px;
+    font-size: 16px;
     padding: 0.5em;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    border-radius: 0.5em;
+    border-radius: 0.25em;
     resize: none;
     font-family: inherit;
 }
@@ -47,8 +46,8 @@ textarea:focus {
     outline-color: #2d84f5;
 }
 
-input[type=text] {
-    height: unset;
+.text_error {
+    border: 1px solid orangered;
 }
 
 .disabled-button,
@@ -58,12 +57,18 @@ input[type=text] {
     border: none;
     padding: 1em;
     text-transform: uppercase;
-    border-radius: 0.5em;
+    border-radius: 0.25em;
     margin-top: 2em;
     align-self: flex-end;
     cursor: pointer;
+    font-size: 16px;
 }
 
 .submit-button {
     background-color: #404040;
+}
+
+.error {
+    color: orangered;
+    font-size: 16px;
 }
