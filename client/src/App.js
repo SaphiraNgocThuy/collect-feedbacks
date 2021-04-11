@@ -26,10 +26,7 @@ const App = () => {
       }, 2000);
   }, [step]);
 
-  const onClose = () => {
-    console.log("close");
-    setStep(0);
-  };
+  const onClose = () => setStep(0);
 
   const onRating = (rate) => {
     Axios.post(`${SERVER_URL}/ratings`, { rating: rate }).then(
@@ -41,7 +38,6 @@ const App = () => {
   };
 
   const onSubmit = (likeMost, likeLeast, email) => {
-    console.log("submiting");
     Axios.put(`${SERVER_URL}/responses/${reviewId}`, {
       likeMost,
       likeLeast,
@@ -55,10 +51,10 @@ const App = () => {
       case 1:
         return (
           <div
-            className={`box ${step > 1 && " box-clicked"}`}
+            className="box"
             onMouseEnter={step === 0 ? () => setStep(1) : undefined}
             onMouseLeave={step === 1 ? () => setStep(0) : undefined}
-            onClick={step <= 1 ? () => setStep(2) : undefined}
+            onClick={() => setStep(2)}
           >
             {step ? (
               <strong>Help us improve</strong>

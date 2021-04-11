@@ -44,11 +44,6 @@
   animation: move-right 0.4s ease-in 0.4s forwards;
 }
 
-.box-clicked {
-  padding: 0;
-  align-items: flex-end;
-}
-
 @keyframes move-right {
   100% {
     transform: translateX(0);
