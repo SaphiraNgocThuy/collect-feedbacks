@@ -46,30 +46,27 @@ const App = () => {
       likeMost,
       likeLeast,
       email,
-    }).then((res) => {
-      console.log("abc");
-      console.log({ res });
-    });
+    }).then(() => setStep(5));
   };
-
-  // const onSubmit = () => {
-  //   console.log("submiting", reviewId);
-  //   // Axios.put(`http://localhost:3001/responses/${reviewId}`, {
-  //   //   likeMost,
-  //   //   likeLeast,
-  //   //   email,
-  //   // }).then((res) => {
-  //   //   console.log("abc");
-  //   //   console.log({ res });
-  //   // });
-  // };
 
   const renderContent = () => {
     switch (step) {
       case 0:
-        return <img src={smile} alt="face" />;
       case 1:
-        return <strong>Help us improve</strong>;
+        return (
+          <div
+            className={`box ${step > 1 && " box-clicked"}`}
+            onMouseEnter={step === 0 ? () => setStep(1) : undefined}
+            onMouseLeave={step === 1 ? () => setStep(0) : undefined}
+            onClick={step <= 1 ? () => setStep(2) : undefined}
+          >
+            {step ? (
+              <strong>Help us improve</strong>
+            ) : (
+              <img src={smile} alt="face" />
+            )}
+          </div>
+        );
       case 2:
       case 3:
       case 5:
@@ -86,53 +83,7 @@ const App = () => {
 
   return (
     <div id="app">
-      <div
-        className={`box ${step > 1 && " box-clicked"}`}
-        onMouseEnter={step === 0 ? () => setStep(1) : undefined}
-        onMouseLeave={step === 1 ? () => setStep(0) : undefined}
-        onClick={
-          step <= 1
-            ? () => {
-                console.log("pressed");
-                setStep(2);
-              }
-            : undefined
-        }
-      >
-        {renderContent()}
-        {/* <SwitchTransition>
-          {showForm ? (
-            <Form {...{ onSubmit }} />
-          ) : showRating ? (
-            <CSSTransition
-              key="rate"
-              timeout={400}
-              classNames="rate"
-              unmountOnExit
-            >
-              <RatingBox showThankYou={isRated} {...{ onRating, onClose }} />
-            </CSSTransition>
-          ) : showBadge ? (
-            <CSSTransition
-              key="badge"
-              timeout={400}
-              classNames="badge"
-              unmountOnExit
-            >
-              <strong>Help us improve</strong>
-            </CSSTransition>
-          ) : (
-            <CSSTransition
-              key="face"
-              timeout={400}
-              classNames="face"
-              unmountOnExit
-            >
-              <img src={smile} alt="face" />
-            </CSSTransition>
-          )}
-        </SwitchTransition> */}
-      </div>
+      <div id="big-container">{renderContent()}</div>
     </div>
   );
 };
