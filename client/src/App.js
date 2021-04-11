@@ -6,6 +6,8 @@ import Form from "./components/Form";
 import RatingBox from "./components/RatingBox";
 import Axios from "axios";
 
+const SERVER_URL = process.env.REACT_APP_SERVER_URL || "http://localhost:3001";
+
 const App = () => {
   const [step, setStep] = useState(0);
   const [reviewId, setReviewId] = useState(null);
@@ -30,7 +32,7 @@ const App = () => {
   };
 
   const onRating = (rate) => {
-    Axios.post("http://localhost:3001/ratings", { rating: rate }).then(
+    Axios.post(`${SERVER_URL}/ratings`, { rating: rate }).then(
       ({ data: { id } }) => {
         setReviewId(id);
         setStep(3);
@@ -40,7 +42,7 @@ const App = () => {
 
   const onSubmit = (likeMost, likeLeast, email) => {
     console.log("submiting");
-    Axios.put(`http://localhost:3001/responses/${reviewId}`, {
+    Axios.put(`${SERVER_URL}/responses/${reviewId}`, {
       likeMost,
       likeLeast,
       email,
