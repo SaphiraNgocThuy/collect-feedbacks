@@ -96,10 +96,10 @@ app.get('/responses/', async (req, res) => {
 
 app.put('/responses/:id', async (req, res) => {
   try {
-    const response_id = req.params.id;
+    const responseId = req.params.id;
     const answers = req.body;
     const result = await Promise.all(answers.map(async (answer) => {
-      const sqlQuery = `INSERT INTO feedback_details SET feedback_id=${response_id}, question_id=${answer.question_id}, feedback='${answer.feedback}';`;
+      const sqlQuery = `INSERT INTO feedback_details SET feedback_id=${responseId}, question_id=${answer.questionId}, feedback='${answer.feedback}';`;
       return await db.query(sqlQuery);
     }));
     if (result && result.length>0) {
@@ -116,7 +116,7 @@ app.put('/responses/:id', async (req, res) => {
 app.get('/questions/', async (req, res) => {
   const sqlQuery = 'SELECT * from questions where is_enable=true';
   const result = await db.query(sqlQuery);
-  res.send(result);
+  res.send(result.map(({ id, is_required, question_type, question, placeholder})=>({id, isRequire: is_required, questionType: question_type, question, placeholder})));
 })
 
 app.post('/questions/', async (req, res) => {

@@ -1,69 +1,101 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./index.css";
+import { validateEmail } from "../../utils";
 
-const fields = {
-  likeMost: {
-    question: "What did you like most?",
-    placeholder: "Tell us your experience (optional)",
-  },
-  likeLeast: {
-    question: "What did you like least?",
-    placeholder: "Let us know how we can improve (optional)",
-  },
-  email: {
-    question: "You email",
-    placeholder: "Your email address (optional)",
-  },
-};
-// eslint-disable-next-line no-unused-vars
-const Form = ({ onSubmit, onClose }) => {
+const Form = ({ onSubmit, onClose, questions }) => {
   const [disableButton, setDisableButton] = useState(true);
-  const [likeMost, setLikeMost] = useState(null);
-  const [likeLeast, setLikeLeast] = useState("");
-  const [email, setEmail] = useState("");
+  const [responses, setResponses] = useState({});
 
   useEffect(() => {
-    setDisableButton(!likeMost && !likeLeast && !email);
-  }, [!likeMost, !likeLeast, !email]);
+    const noRequiredNeed = questions.every(({ id, isRequired }) =>
+      isRequired ? responses[id] && !!responses[id].value : true
+    );
 
-  const onChange = ({ target: { value, name } }) => {
-    switch (name) {
-      case "likeMost":
-        setLikeMost(value);
-        break;
-      case "likeLeast":
-        setLikeLeast(value);
-        break;
-      case "email":
-        setEmail(value);
-        break;
-      default:
-        break;
-    }
+    const responseValues = Object.values(responses);
+    const noError = responseValues.every(({ error }) => !error);
+    const isEmpty =
+      !responseValues.length || responseValues.every(({ value }) => !value);
+
+    setDisableButton(!noRequiredNeed || !noError || isEmpty);
+  }, [responses]);
+
+  const onChange = ({ target: { value, name: id } }) => {
+    setResponses({ ...responses, [id]: { value } });
+  };
+
+  const onFocus = (id) => {
+    setResponses({
+      ...responses,
+      [id]: { ...responses[id], error: "" },
+    });
+  };
+
+  const onBlur = (id, isRequired, isEmail) => {
+    const { value } = responses[id];
+    setResponses({
+      ...responses,
+      [id]: {
+        ...responses[id],
+        error:
+          isRequired && !value
+            ? "Required field!"
+            : isEmail && !!value && !validateEmail(value)
+            ? "Wrong email format!"
+            : "",
+      },
+    });
   };
 
   const onSubmitForm = (event) => {
     event.preventDefault();
-    onSubmit(likeMost, likeLeast, email);
+    onSubmit(
+      Object.entries(responses).flatMap(
+        ([questionId, { value }]) =>
+          (!!value && [
+            {
+              questionId: questionId,
+              feedback: value,
+            },
+          ]) ||
+          []
+      )
+    );
   };
 
   return (
     <div id="form-container">
       <div id="top">Tell us more</div>
       <form onSubmit={onSubmitForm}>
-        {Object.keys(fields).map((item) => (
-          <div key={item}>
-            <p>{fields[item].question}</p>
-            <textarea
-              name={item}
-              placeholder={fields[item].placeholder}
-              rows={item === "email" ? 1 : 3}
-              maxLength={255}
-              {...{ onChange }}
-            />
-          </div>
-        ))}
+        {questions.map(
+          ({ id, isRequired, questionType, question, placeholder }) => {
+            const isEmail = questionType === "email";
+            const hasError = responses[id] && !!responses[id].error;
+            return (
+              <div key={id}>
+                <p>
+                  {question}
+                  {isRequired && <span> *</span>}
+                </p>
+                <textarea
+                  className={hasError ? "text_error" : undefined}
+                  name={id}
+                  placeholder={placeholder + (!isRequired ? " (optional)" : "")}
+                  rows={isEmail ? 1 : 3}
+                  maxLength={255}
+                  onFocus={() => onFocus(id, isEmail)}
+                  onBlur={
+                    isRequired || isEmail
+                      ? () => onBlur(id, isRequired, isEmail)
+                      : undefined
+                  }
+                  {...{ onChange }}
+                />
+                {hasError && <div className="error">{responses[id].error}</div>}
+              </div>
+            );
+          }
+        )}
         <input
           type="submit"
           value="Submit"
@@ -77,6 +109,7 @@ const Form = ({ onSubmit, onClose }) => {
 };
 
 Form.propTypes = {
+  questions: PropTypes.any,
   onSubmit: PropTypes.func,
   onClose: PropTypes.func,
 };
