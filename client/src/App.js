@@ -47,22 +47,6 @@ const App = () => {
 
   const renderContent = () => {
     switch (step) {
-      case 0:
-      case 1:
-        return (
-          <div
-            className="box"
-            onMouseEnter={step === 0 ? () => setStep(1) : undefined}
-            onMouseLeave={step === 1 ? () => setStep(0) : undefined}
-            onClick={() => setStep(2)}
-          >
-            {step ? (
-              <strong>Help us improve</strong>
-            ) : (
-              <img src={smile} alt="face" />
-            )}
-          </div>
-        );
       case 2:
       case 3:
       case 5:
@@ -77,7 +61,24 @@ const App = () => {
 
   return (
     <div id="app">
-      <div id="big-container">{renderContent()}</div>
+      <div id="big-container">
+        {step <= 1 ? (
+          <div
+            className="box"
+            onMouseEnter={() => setTimeout(() => setStep(1), 200)}
+            onMouseLeave={() => setTimeout(() => setStep(0), 200)}
+            onClick={() => setStep(2)}
+          >
+            {step ? (
+              <strong>Help us improve</strong>
+            ) : (
+              <img src={smile} alt="face" />
+            )}
+          </div>
+        ) : (
+          renderContent()
+        )}
+      </div>
     </div>
   );
 };
