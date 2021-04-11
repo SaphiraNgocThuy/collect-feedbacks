@@ -2,14 +2,17 @@
   position: relative;
   background-color: #2d84f5;
   height: 100vh;
-  display: flex;
-  align-items: flex-end;
+}
+
+#big-container {
+  position: absolute;
+  bottom: 0;
+  margin: 1em;
 }
 
 .box {
-  margin: 1em;
   padding: 0.25em;
-  /* max-width: 2em; */
+  max-width: 2em;
   min-width: 2em;
   height: 2em;
   border-radius: 2em;
@@ -18,7 +21,7 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: all 4s;
+  transition: max-width 0.4s ease-in 0.4s;
 }
 
 .box img {
@@ -39,11 +42,6 @@
 
 .box:hover strong {
   animation: move-right 0.4s ease-in 0.4s forwards;
-}
-
-.box-clicked {
-  padding: 0;
-  align-items: flex-end;
 }
 
 @keyframes move-right {
