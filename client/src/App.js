@@ -17,7 +17,7 @@ const App = () => {
       setTimeout(() => {
         setStep(4);
       }, 2000);
-    setStep === 5 &&
+    step === 5 &&
       setTimeout(() => {
         setStep(6);
         setTimeout(() => {
@@ -66,9 +66,7 @@ const App = () => {
       case 2:
       case 3:
       case 5:
-        return (
-          <RatingBox showThankYou={step === 3} {...{ onRating, onClose }} />
-        );
+        return <RatingBox {...{ step, onRating, onClose }} />;
       case 4:
         return <Form {...{ onSubmit, onClose }} />;
       case 6:
