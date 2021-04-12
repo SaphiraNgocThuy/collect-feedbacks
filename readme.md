@@ -1,6 +1,5 @@
 # COLLECT FEEDBACKS WIDGET
-
-
+You can run a demo here: http://collect-feedbacks-sg.s3-website-ap-southeast-1.amazonaws.com/
 
 ## 1. Installation
 
