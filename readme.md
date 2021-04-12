@@ -44,24 +44,10 @@ yarn start
 
 #### c. Setup Database:
 > Create tables
-```shell
-CREATE DATABASE feedbacks;
-USE feedbacks;
-CREATE TABLE feedbacks (id INTEGER PRIMARY KEY AUTO_INCREMENT, rating INT4);
-CREATE TABLE questions (id INTEGER PRIMARY KEY AUTO_INCREMENT, is_enable BOOLEAN default false, question_type ENUM('short_answer', 'email', 'linear_scale') NOT NULL, question VARCHAR(512), placeholder VARCHAR(512));
-CREATE TABLE feedback_details (feedback_id INTEGER REFERENCES feedbacks(feedback_id), question_id INTEGER REFERENCES questions(question_id), feedback VARCHAR(512), PRIMARY KEY (feedback_id, question_id));
-```
+run SQL at server/DDL
 
 > Create initial questions
-```shell
-INSERT INTO questions (is_enable, question_type, question, placeholder, is_required)
-VALUE 
-(true, 'short_answer', 'What did you like most?', 'Tell us your experience', false),
-(true, 'short_answer', 'What did you like least?', 'Let us know how to improve', false),
-(true, 'email', 'Your email', 'Your email address', false);
-(true, 'linear_scale', 'How would you rate our UI design?', '', false)
-
-```
+run SQL at server/DML
 
 ## 2. Demo
 <img src="demo.gif" alt="demo" width="300"/>
